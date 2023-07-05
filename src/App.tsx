@@ -11,9 +11,9 @@ import routerBindings, {
     NavigateToResource,
     UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
+import { dataProvider } from "./rest-data-provider";
 
 const App: React.FC = () => {
     return (
