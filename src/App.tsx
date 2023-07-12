@@ -12,8 +12,12 @@ import routerBindings, {
     UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
-import { dataProvider } from "./rest-data-provider";
+
+import { dataProvider } from "rest-data-provider";
+import { BlogPostList } from "pages/blog-posts/list";
+import { BlogPostShow } from "pages/blog-posts/show";
+import { BlogPostEdit } from "pages/blog-posts/edit";
+import { BlogPostCreate } from "pages/blog-posts/create";
 
 const App: React.FC = () => {
     return (
@@ -35,6 +39,9 @@ const App: React.FC = () => {
                                 show: "/blog-posts/show/:id",
                                 create: "/blog-posts/create",
                                 edit: "/blog-posts/edit/:id",
+                                meta: {
+                                    canDelete: true,
+                                },
                             },
                         ]}
                         options={{
@@ -57,18 +64,18 @@ const App: React.FC = () => {
                                     }
                                 />
                                 <Route path="blog-posts">
-                                    <Route index element={<MuiInferencer />} />
+                                    <Route index element={<BlogPostList />} />
                                     <Route
                                         path="show/:id"
-                                        element={<MuiInferencer />}
+                                        element={<BlogPostShow />}
                                     />
                                     <Route
                                         path="edit/:id"
-                                        element={<MuiInferencer />}
+                                        element={<BlogPostEdit />}
                                     />
                                     <Route
                                         path="create"
-                                        element={<MuiInferencer />}
+                                        element={<BlogPostCreate />}
                                     />
                                 </Route>
                                 <Route path="*" element={<ErrorComponent />} />
