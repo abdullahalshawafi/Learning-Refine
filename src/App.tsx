@@ -13,6 +13,7 @@ import routerBindings, {
 } from "@refinedev/react-router-v6";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
+import authProvider, { axiosInstance } from "authProvider";
 import { dataProvider } from "rest-data-provider";
 import { BlogPostList } from "pages/blog-posts/list";
 import { BlogPostShow } from "pages/blog-posts/show";
@@ -28,8 +29,10 @@ const App: React.FC = () => {
                 <BrowserRouter>
                     <Refine
                         routerProvider={routerBindings}
+                        authProvider={authProvider}
                         dataProvider={dataProvider(
-                            "https://api.fake-rest.refine.dev"
+                            "https://api.fake-rest.refine.dev",
+                            axiosInstance
                         )}
                         notificationProvider={notificationProvider}
                         resources={[
