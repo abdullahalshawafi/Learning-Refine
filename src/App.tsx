@@ -1,4 +1,4 @@
-import { Refine } from "@refinedev/core";
+import { Refine, Authenticated } from "@refinedev/core";
 import {
     ThemedLayoutV2,
     ErrorComponent,
@@ -8,6 +8,7 @@ import {
 } from "@refinedev/mui";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import routerBindings, {
+    CatchAllNavigate,
     NavigateToResource,
     UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
@@ -19,6 +20,12 @@ import { BlogPostList } from "pages/blog-posts/list";
 import { BlogPostShow } from "pages/blog-posts/show";
 import { BlogPostEdit } from "pages/blog-posts/edit";
 import { BlogPostCreate } from "pages/blog-posts/create";
+import {
+    ForgotPasswordPage,
+    LoginPage,
+    RegisterPage,
+    UpdatePasswordPage,
+} from "components/pages/auth/components";
 
 const App: React.FC = () => {
     return (
@@ -55,9 +62,15 @@ const App: React.FC = () => {
                         <Routes>
                             <Route
                                 element={
-                                    <ThemedLayoutV2>
-                                        <Outlet />
-                                    </ThemedLayoutV2>
+                                    <Authenticated
+                                        fallback={
+                                            <CatchAllNavigate to="/login" />
+                                        }
+                                    >
+                                        <ThemedLayoutV2>
+                                            <Outlet />
+                                        </ThemedLayoutV2>
+                                    </Authenticated>
                                 }
                             >
                                 <Route
@@ -81,6 +94,37 @@ const App: React.FC = () => {
                                         element={<BlogPostCreate />}
                                     />
                                 </Route>
+                            </Route>
+                            <Route
+                                element={
+                                    <Authenticated fallback={<Outlet />}>
+                                        <NavigateToResource />
+                                    </Authenticated>
+                                }
+                            >
+                                <Route path="login" element={<LoginPage />} />
+                                <Route
+                                    path="register"
+                                    element={<RegisterPage />}
+                                />
+                                <Route
+                                    path="forgot-password"
+                                    element={<ForgotPasswordPage />}
+                                />
+                                <Route
+                                    path="update-password"
+                                    element={<UpdatePasswordPage />}
+                                />
+                            </Route>
+                            <Route
+                                element={
+                                    <Authenticated fallback={<Outlet />}>
+                                        <ThemedLayoutV2>
+                                            <Outlet />
+                                        </ThemedLayoutV2>
+                                    </Authenticated>
+                                }
+                            >
                                 <Route path="*" element={<ErrorComponent />} />
                             </Route>
                         </Routes>

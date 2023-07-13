@@ -162,7 +162,7 @@ const authProvider: AuthBindings = {
         };
     },
 
-    updatePassword: async ({ password }) => {
+    updatePassword: async ({ password, confirmPassword }) => {
         return {
             success: false,
             error: {
